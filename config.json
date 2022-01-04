@@ -1,0 +1,8 @@
+{
+    "db" : {
+        "username" : "kaining",
+        "password" : "0000",
+        "database" : "myauction"
+    },
+    "serverPort": "3000"
+}
