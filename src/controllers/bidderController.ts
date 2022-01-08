@@ -1,13 +1,14 @@
 import { FastifyRequest, FastifyReply } from "fastify";
 import BidderModel from "../models/bidder";
-import { app } from "..";
-import good from "../models/good";
+import { app } from "../lib/fastify";
+
  
-export const getBidderById = async (req: FastifyRequest, reply: FastifyReply)=> {
+export const getBidderById = async (req: FastifyRequest<{
+	Params: {id:string}
+  }>, reply: FastifyReply)=> {
 	try {
 		// await req.jwtVerify()
-        const params: any = req.params;
-		return await BidderModel.findById(params.bidderId).populate({path:'auctions'});
+		return await BidderModel.findById(req.params.id).populate({path:'auctions'});
 	} catch (err) {
         app.log.error(err);
 		throw err;

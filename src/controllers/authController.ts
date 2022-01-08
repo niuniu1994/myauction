@@ -5,7 +5,7 @@ import Bidder from "../models/bidder";
 import bcrypt from 'bcrypt';
 // import {secretAuth} from '../config/auth.config';
 import fastifyJWT from "fastify-jwt";
-import {app} from "../index";
+import {app} from "../lib/fastify";
 
 //obtener todos los usuarios
 export const login = async (req: FastifyRequest, reply: FastifyReply) => {

@@ -1,0 +1,19 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "$id": "bidder.complete.response.json",
+    "type": "object",
+    "properties": {
+        "_id":{"type":"string"},
+        "firstName": {"type":"string"},
+        "lastName": {"type":"string"},
+        "email" :{"type":"string"},
+        "dateOfBirth" : {"type":"string"},
+        "phone": {"type":"string"},
+        "password" : {"type":"string"},
+        "auctions" : {"type":"array","items": {"$ref": "auction.basic.response.json"}},
+        "goods": {"type":"array","items": {"$ref": "good.complete.response.json"}}
+    },
+    "additionalProperties": false,
+    "required": ["_id","firstName","lastName","email","dateOfBirth","phone","password"]
+  }
+  

@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose";
-import { Currencies } from "./enums/Currency";
+import { Currency } from "./enums/Currency";
 
 // export interface Good{
 //     _id: Schema.Types.ObjectId,
@@ -19,9 +19,9 @@ const goodSchema = new Schema({
     startingPrice: { type: Number, required: true },
     reservePrice: { type: Number, required: true },
     finalPrice: { type: Number, required: true,default:0},
-    currency: { type: String, required: true , default:Currencies.USD},
-    auctions: [{ type: Schema.Types.ObjectId, ref: 'auction' }],
+    currency: { type: String, required: true , default:Currency.USD},
     status: {type: String, required: false},
+    auctions: [{ type: Schema.Types.ObjectId, ref: 'auction' }],
     buyer: {type: Schema.Types.ObjectId , ref: "bidder"}
   });
 

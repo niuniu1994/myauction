@@ -1,0 +1,20 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "$id": "auction.compelete.response.json",
+    "type": "object",
+    "properties": {
+        "_id": {"type":"string"},
+        "auctionName": {"type":"string"},
+        "theme": {"type":"string"},
+        "startTime" : {"type":"string"},
+        "endTime": {"type":"string"},
+        "bidders" : {"type":"array","items": {
+            "$ref": "bidder.limited.response.json"
+        }},
+        "goods" : {"type":"array", "items": {"$ref": "bidder.limited.response.json"}}
+        
+    },
+    "additionalProperties": false,
+    "required": ["_id","auctionName","theme","startTime","endTime"]
+  }
+  

@@ -1,0 +1,18 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "$id": "auction.limited.response.json",
+    "type": "object",
+    "properties": {
+        "_id": {"type":"string"},
+        "auctionName": {"type":"string"},
+        "theme": {"type":"string"},
+        "startTime" : {"type":"string"},
+        "endTime": {"type":"string"},
+        "goods" : {"type":"array","items": {
+            "$ref": "good.limited.response.json"
+        }}
+    },
+    "additionalProperties": false,
+    "required": ["_id","auctionName","theme","startTime","endTime"]
+  }
+  

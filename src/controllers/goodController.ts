@@ -1,13 +1,13 @@
 import { FastifyRequest, FastifyReply } from "fastify";
 import GoodModel from "../models/good";
-import { app } from "..";
-import good from "../models/good";
+import { app } from "../lib/fastify";
  
-export const getGoodById = async (req: FastifyRequest, reply: FastifyReply)=> {
+export const getGoodById = async (req: FastifyRequest<{Params: {id:string}}>)=> {
 	try {
 		// await req.jwtVerify()
-        const params: any = req.params;
-		return await GoodModel.findById(params.goodId);
+		const x = await GoodModel.findById(req.params.id).populate("auctions");
+		console.log(x);
+		return x;
 	} catch (err) {
         app.log.error(err);
 		throw err;

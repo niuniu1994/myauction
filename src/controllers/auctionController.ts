@@ -1,16 +1,14 @@
 import { FastifyRequest, FastifyReply } from "fastify";
 import AuctionModel from "../models/auction";
-import { app } from "..";
  
-export const getAuctionById = async (req: FastifyRequest, reply: FastifyReply)=> {
+export async function getAuctionById(req: FastifyRequest<{Params: {id:string}}>){
 	try {
 		// await req.jwtVerify()
-        const params: any = req.params;
-		return await AuctionModel.findById(params.auctionId);
+		return await AuctionModel.findById(req.params.id).populate('goods');
 	} catch (err) {
-        app.log.error(err);
 		throw err;
 	}
-};
+}
+
 
 // export const getSingleUser = async (req: FastifyRequest, reply: FastifyReply<ServerResponse>) => {

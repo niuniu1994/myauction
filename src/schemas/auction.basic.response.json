@@ -1,0 +1,15 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "$id": "auction.basic.response.json",
+    "type": "object",
+    "properties": {
+        "_id": {"type":"string"},
+        "auctionName": {"type":"string"},
+        "theme": {"type":"string"},
+        "startTime" : {"type":"string"},
+        "endTime": {"type":"string"}
+    },
+    "additionalProperties": false,
+    "required": ["_id","auctionName","theme","startTime","endTime"]
+  }
+  

@@ -11,6 +11,11 @@ export const Options = {
 			url: 'https://swagger.io',
 			description: 'Find more info here',
 		},
+		tags: [
+			{ name: 'bidder', description: 'Bidder related end-points' },
+			{ name: 'good', description: 'Good related end-points' },
+			{ name: 'auction', description: 'Auction related end-points' }
+		  ],	
 		host: 'localhost:3000',
 		schemes: ['http'],
 		consumes: ['application/json'],

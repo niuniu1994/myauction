@@ -23,4 +23,4 @@ const auctionSchmema = new Schema({
     bidders: [{ type: Schema.Types.ObjectId, ref: 'bidder' ,default:[] }],
   });
                       
-  export default model('auction', auctionSchmema)
+export default model('auction', auctionSchmema)
