@@ -1,0 +1,14 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "$id": "get.good.response.json",
+    "type": "object",
+    "properties": {
+        "code": {"type":"number"},
+        "msg": {"type":"string"},
+        "data": {"$ref": "good.complete.response.json"}
+    
+    },
+    "additionalProperties": false,
+    "required": ["code","msg","data"]
+  }
+  

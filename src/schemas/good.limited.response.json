@@ -5,9 +5,9 @@
     "properties": {
         "_id": {"type":"string"},
         "goodName": {"type":"string"},
-        "startingPrice": {"type":"string"},
-        "reservePrice" :{"type":"string"},
-        "finalPrice" : {"type":["string","null"]},
+        "startingPrice": {"type":"number"},
+        "reservePrice" :{"type":"number"},
+        "finalPrice" : {"type":"number"},
         "currency": {"type":"string", "enum": ["EUR","USD","GBD"]},
         "status" : {"type":"string", "enum": ["available","sold","pass"]},
         "buyer" : {"type": ["string","null"]}

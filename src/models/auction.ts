@@ -14,13 +14,12 @@ import good from "./good";
 // }
 
 const auctionSchmema = new Schema({
-    _id: { type: Schema.Types.ObjectId, required: false },
     auctionName: { type: String, required: true },
     theme: { type: String, required: true },
     startTime: { type: Date, required: true },
     endTime: { type: Date, required: true },
     goods:  [{ type: Schema.Types.ObjectId, ref: 'good' ,default:[]}],
     bidders: [{ type: Schema.Types.ObjectId, ref: 'bidder' ,default:[] }],
-  });
+  },{versionKey:false});
                       
 export default model('auction', auctionSchmema)

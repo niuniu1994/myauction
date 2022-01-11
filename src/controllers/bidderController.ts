@@ -10,7 +10,6 @@ export const getBidderById = async (req: FastifyRequest<{
 		// await req.jwtVerify()
 		return await BidderModel.findById(req.params.id).populate({path:'auctions'});
 	} catch (err) {
-        app.log.error(err);
 		throw err;
 	}
 };

@@ -1,23 +1,21 @@
 {
     "$schema": "http://json-schema.org/schema",
-    "$id": "good.complete.response.json",
+    "$id": "good.request.json",
     "type": "object",
     "properties": {
-        "_id": {"type":"string"},
         "goodName": {"type":"string"},
-        "startingPrice": {"type":"number"},
-        "reservePrice" :{"type":"number"},
-        "finalPrice" : {"type":"number"},
+        "startingPrice": {"type":"number","exclusiveMinimum": 0},
+        "reservePrice" :{"type":"number","exclusiveMinimum": 0},
+        "finalPrice" : {"type":["number"],"minimum": 0},
         "currency": {"type":"string", "enum": ["EUR","USD","GBD"]},
         "status" : {"type":"string", "enum": ["available","sold","pass"]},
         "auctions" : {"type":"array","items": {
-            "$ref": "auction.basic.response.json" 
+            "type":"string"
         }},
         "buyer" : {"type": ["string","null"]}
-        
     },
     "additionalProperties": false,
-    "required": ["_id","goodName","startingPrice","reservePrice","finalPrice",
+    "required": ["goodName","startingPrice","reservePrice","finalPrice",
         "currency","status","buyer","auctions"]
   }
   

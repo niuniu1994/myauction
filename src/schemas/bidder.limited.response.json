@@ -10,10 +10,14 @@
         "dateOfBirth" : {"type":"string"},
         "phone": {"type":"string"},
         "password" : {"type":"string"},
-        "auctions" : {"type":"array","items": {}},
-        "goods" : {"type":"array", "items": {}}
+        "auctions" : {"type":"array","items": {
+            "type":"string"
+        }},
+        "goods" : {"type":"array", "items": {
+            "type":"string"
+        }}
     },
     "additionalProperties": false,
-    "required": ["_id","firstName"]
+    "required": ["firstName","lastName","email","dateOfBirth","phone","password", "auctions","goods"]
   }
   

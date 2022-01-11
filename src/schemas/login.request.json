@@ -1,0 +1,12 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "$id": "login.request.json",
+    "type": "object",
+    "properties": {
+        "email" :{"type":"string"},
+        "password" : {"type":"string"}
+    },
+    "additionalProperties": false,
+    "required": ["email","password"]
+  }
+  

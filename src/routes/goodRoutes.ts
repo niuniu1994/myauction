@@ -1,7 +1,8 @@
 import { FastifyInstance, RouteOptions } from "fastify";
 import * as goodController from '../controllers/goodController'
-import GoodCompleteResponseSchema from '../schemas/good.complete.response.json'
-
+import getGoodResponseSchema from '../schemas/get.good.response.json'
+import GoodRequestSchema from '../schemas/good.request.json'
+import * as auths from "../services/auths";
 export default async function goodRoutes(fastify:FastifyInstance) {
 
   fastify.get("/:id",{
@@ -20,13 +21,52 @@ export default async function goodRoutes(fastify:FastifyInstance) {
 			}
 			,
 			response: {
-				200: GoodCompleteResponseSchema
+				200: getGoodResponseSchema
 			}
     },
     handler: goodController.getGoodById
   })
   
+  fastify.post("/",{
+	  schema:{
+		description: 'Add single good',
+		tags: ['good'],
+		body: GoodRequestSchema
+	  },
+	  preHandler: [
+		  auths.auctioneerAuthPolicy
+	  ],
+	  handler: goodController.addGood
+  })
+
+   
+  fastify.patch("/:id",{
+	schema:{
+		description: 'Update good by id',
+		tags: ['good'],
+		body: GoodRequestSchema
+	},
+	preHandler: [
+		auths.auctioneerAuthPolicy
+	],
+	handler: goodController.updateGoodById
+  })
+
+  fastify.delete("/:id",{
+	  schema:{
+		description: 'Delete good by id',
+		tags: ['good'],
+	  },
+	  preHandler:[
+		  auths.auctioneerAuthPolicy
+	  ],
+	  handler: goodController.deleteGoodById
+
+  })
+
 }
+
+
 
 
 
