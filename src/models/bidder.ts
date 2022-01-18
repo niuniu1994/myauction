@@ -7,9 +7,7 @@ export interface Bidder{
   email:string,
   dateOfBirth:string,
   phone: string,
-  password: string,
-  auctions: Types.Array<string>,
-  goods:Types.Array<string>
+  password: string
 }
 
 const bidderSchema = new Schema({
@@ -18,9 +16,7 @@ const bidderSchema = new Schema({
     email: { type: String, required: true },
     dateOfBirth: { type: Date, required: true },
     phone: { type: String, required: true },
-    password: {type: String, required: true},
-    auctions: [{ type: Schema.Types.ObjectId, ref: 'auction' }],
-    goods: [{ type: Schema.Types.ObjectId, ref: 'good' }],
+    password: {type: String, required: true}
   },{versionKey:false});
 
 export default model('bidder', bidderSchema)

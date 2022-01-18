@@ -11,7 +11,6 @@ export const auctioneerAuthPolicy = (request: FastifyRequest, reply: FastifyRepl
         done(new UnauthorizedError('Missing token header')) 
     }
 
-
     app.jwt.verify(token, (error,decoded) => {
         console.log(decoded)
         if (error || !decoded.role ||  decoded.role !== 'auctioneer'){
@@ -20,8 +19,6 @@ export const auctioneerAuthPolicy = (request: FastifyRequest, reply: FastifyRepl
             done()
         }
     });
-   
-
 }
 
 

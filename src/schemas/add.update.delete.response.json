@@ -1,0 +1,13 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "$id": "good.add.update.delete.response.json",
+    "type": "object",
+    "properties": {
+        "code": {"type":"number"},
+        "msg": {"type":"string"},
+        "data": {"type":"array","items": {"type":"string"}} 
+    },
+    "additionalProperties": false,
+    "required": ["code","msg","data"]
+  }
+  

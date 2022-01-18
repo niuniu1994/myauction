@@ -9,13 +9,10 @@
         "finalPrice" : {"type":["number"],"minimum": 0},
         "currency": {"type":"string", "enum": ["EUR","USD","GBD"]},
         "status" : {"type":"string", "enum": ["available","sold","pass"]},
-        "auctions" : {"type":"array","items": {
-            "type":"string"
-        }},
         "buyer" : {"type": ["string","null"]}
     },
     "additionalProperties": false,
     "required": ["goodName","startingPrice","reservePrice","finalPrice",
-        "currency","status","buyer","auctions"]
+        "currency","status","buyer"]
   }
   

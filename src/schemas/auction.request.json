@@ -1,18 +1,16 @@
 {
     "$schema": "http://json-schema.org/schema",
-    "$id": "auction.limited.response.json",
+    "$id": "auction.request.json",
     "type": "object",
     "properties": {
-        "_id": {"type":"string"},
         "auctionName": {"type":"string"},
         "theme": {"type":"string"},
         "startTime" : {"type":"string","format": "date-time"},
         "endTime": {"type":"string","format": "date-time"},
-        "goods" : {"type":"array","items": {
-            "$ref": "good.limited.response.json"
-        }}
+        "bidders" : {"type":"array","items": {"type":"string"}},
+        "goods" : {"type":"array", "items": {"type":"string"}}
     },
     "additionalProperties": false,
-    "required": ["_id","auctionName","theme","startTime","endTime","goods"]
+    "required": ["auctionName","theme","startTime","endTime","bidders","goods"]
   }
   

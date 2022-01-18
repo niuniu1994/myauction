@@ -6,8 +6,8 @@
         "_id": {"type":"string"},
         "auctionName": {"type":"string"},
         "theme": {"type":"string"},
-        "startTime" : {"type":"string"},
-        "endTime": {"type":"string"},
+        "startTime" : {"type":"string","format": "date-time"},
+        "endTime": {"type":"string","format": "date-time"},
         "bidders" : {"type":"array","items": {
             "$ref": "bidder.limited.response.json"
         }},

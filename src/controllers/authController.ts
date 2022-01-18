@@ -31,7 +31,7 @@ export const bidderLogin = async (req: FastifyRequest<{Body:{email:string,passwo
           });
         }
       
-        const token = app.jwt.sign({ role:'bidder',email:bidder.email }, {
+        const token = app.jwt.sign({ role:'bidder',bidderId:bidder._id,email:bidder.email }, {
           expiresIn: 86400 // 24 hours
         });
 

@@ -11,3 +11,5 @@ export class EntityNotFoundError extends Error{}
 export class TokenInvalidError extends Error{}
 
 export class InvalidInputError extends Error{}
+
+export class InvalidPriceError extends Error{};

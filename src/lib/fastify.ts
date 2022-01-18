@@ -1,4 +1,5 @@
 import * as fastify from "fastify";
+import * as fs from 'fs';
 import jwt from 'fastify-jwt';
 import cookie from 'fastify-cookie';
 import goodRoutes from '../routes/goodRoutes';
@@ -12,14 +13,22 @@ import * as auctionBasicResponseSchema from '../schemas/auction.basic.response.j
 import * as goodCompleteResponseSchema from '../schemas/good.complete.response.json';
 import * as bidderLimitedResponseSchema from '../schemas/bidder.limited.response.json'
 import * as goodLimitedResponseSchema from '../schemas/good.limited.response.json';
-import * as getGoodResponseSchema from '../schemas/get.good.response.json'
+import * as getGoodResponseSchema from '../schemas/good.get.response.json'
 import authRoutes from "../routes/authRoute";
-import { EntityNotFoundError, InvalidInputError, UnauthorizedError } from "../models/oth/customErrors";
+import biddingRoutes from "../routes/biddingRoutes";
+
+import { EntityNotFoundError, InvalidInputError, InvalidPriceError, UnauthorizedError } from "../models/oth/customErrors";
+import { Auction } from "../models/auction";
 export const app = fastify.default({
     logger: true
 })
 .register(jwt,{
-  secret: 'r2kkdgh)c(b`ai+owhe]bsh23/d;'
+  secret: {
+    private: fs.readFileSync('config/private.key'),
+    public: fs.readFileSync('config/public.key'),
+  },
+  sign: { algorithm: 'RS256' }
+
 })
 .register(cookie)
 .register(swagger,Options)
@@ -27,6 +36,7 @@ export const app = fastify.default({
 .register(goodRoutes,{prefix:"/v1/goods"})
 .register(bidderRoutes,{prefix:"v1/bidders"})
 .register(authRoutes,{prefix:'/v1/auth'})
+.register(biddingRoutes,{prefix:'/v1/bidding'})
 //register schema
 .addSchema(auctionBasicResponseSchema)
 .addSchema(auctionLimitedResponseSchema)
@@ -41,6 +51,9 @@ export const app = fastify.default({
     } else if (error instanceof EntityNotFoundError) {
       reply.log.info({ res: reply, err: error }, error?.message)
       void reply.status(404).send(new Error('Requested entity not found'))
+    } else if (error instanceof InvalidPriceError){
+      reply.log.info({ res: reply, err: error }, error?.message)
+      void reply.status(404).send(new Error('Price is lower than or equal to actual price'))
     } else if (error instanceof InvalidInputError){
       reply.log.info({ res: reply, err: error }, error?.message)
       void reply.status(404).send(new Error('Input contains invalid data'))

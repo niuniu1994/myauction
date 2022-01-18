@@ -1,5 +1,4 @@
 import { FastifyInstance, RouteOptions } from "fastify";
-import BidderModel from "../models/bidder";
 import * as bidderController from '../controllers/bidderController'
 import BidderCompeleteSchema from '../schemas/bidder.complete.response.json'
 

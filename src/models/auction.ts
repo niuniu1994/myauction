@@ -1,19 +1,18 @@
 
 import { model, Schema, Types } from "mongoose"
-import bidder from "./bidder";
-import good from "./good";
 
-// export interface Auction {
-//     _id: Schema.Types.ObjectId,
-//     auctionName: string,
-//     theme: string,
-//     startTime: Schema.Types.Date,
-//     endTime: Schema.Types.Date,
-//     goods: Types.Array<string> | null,
-//     bidders: Types.Array<string> | null
-// }
 
-const auctionSchmema = new Schema({
+export interface Auction {
+    _id: Types.ObjectId,
+    auctionName: string,
+    theme: string,
+    startTime: Schema.Types.Date,
+    endTime: Schema.Types.Date,
+    goods: Types.Array<Types.ObjectId>,
+    bidders: Types.Array<Types.ObjectId>
+}
+
+const auctionSchema = new Schema({
     auctionName: { type: String, required: true },
     theme: { type: String, required: true },
     startTime: { type: Date, required: true },
@@ -22,4 +21,4 @@ const auctionSchmema = new Schema({
     bidders: [{ type: Schema.Types.ObjectId, ref: 'bidder' ,default:[] }],
   },{versionKey:false});
                       
-export default model('auction', auctionSchmema)
+export default model('auction', auctionSchema)

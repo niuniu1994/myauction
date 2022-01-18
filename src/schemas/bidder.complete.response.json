@@ -9,9 +9,7 @@
         "email" :{"type":"string"},
         "dateOfBirth" : {"type":"string"},
         "phone": {"type":"string"},
-        "password" : {"type":"string"},
-        "auctions" : {"type":"array","items": {"$ref": "auction.basic.response.json"}},
-        "goods": {"type":"array","items": {"$ref": "good.complete.response.json"}}
+        "password" : {"type":"string"}
     },
     "additionalProperties": false,
     "required": ["_id","firstName","lastName","email","dateOfBirth","phone","password"]
