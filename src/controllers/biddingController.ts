@@ -29,7 +29,7 @@ export const offerPrice = async (req: FastifyRequest<{ Params: { auctionId: stri
 					good.finalPrice = req.params.price;
 					good.buyer = bidder.bidderId
 					await GoodSchema.updateOne({ _id: req.params.goodId }, good)
-					reply.status(200).send(new ResponseTemplate(StatusCodes.OK, "Price of good is updated", [good._id]))
+					return new ResponseTemplate(StatusCodes.OK, "Price of good is updated", [good._id]);
 				} else {
 					throw new InvalidPriceError(`Price is lower than ${good.finalPrice}`)
 				}

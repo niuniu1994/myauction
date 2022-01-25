@@ -12,14 +12,14 @@ import { ObjectId } from "mongodb";
 export async function getAllAuctions(req: FastifyRequest,reply: FastifyReply){
 	const auctions = await AuctionSchema.find().populate('goods').populate('bidders');
 	console.log(auctions)
-	reply.status(200).send(new ResponseTemplate(StatusCodes.CREATED,"Auctions found",auctions))
+	return new ResponseTemplate(StatusCodes.CREATED,"Auctions found",auctions)
 }
 
 export async function getAuctionById(req: FastifyRequest<{Params: {id:string}}>,reply: FastifyReply){
 	try {
 		const auction = await AuctionSchema.findById(req.params.id).populate('goods').populate('bidders');
 		console.log(auction)
-		reply.status(200).send(new ResponseTemplate(StatusCodes.CREATED,"Auction found",[auction]))
+		return new ResponseTemplate(StatusCodes.CREATED,"Auction found",[auction])
 	} catch (err) {
 		throw new EntityNotFoundError(`Auction not found : ${req.params.id}`);
 	}
@@ -44,7 +44,7 @@ export async function updateAuctionById(req: FastifyRequest<{Params:{id:string},
 	
 		await AuctionSchema.findOneAndUpdate({_id:req.params.id},auction).then(newAuction => {
 			if(auction.endTime != newAuction.endTime) scheduleUpdateAuctionJob(newAuction._id,newAuction.endTime,newAuction.goods);;
-			reply.status(200).send(new ResponseTemplate(StatusCodes.OK,"Auction has been updated",[req.params.id]))
+			return new ResponseTemplate(StatusCodes.OK,"Auction has been updated",[req.params.id])
 			})
 		
 		
@@ -55,7 +55,7 @@ export async function updateAuctionById(req: FastifyRequest<{Params:{id:string},
 
 export async function deleteAuctionById(req: FastifyRequest<{Params:{id:string}}>,reply: FastifyReply){
 	await AuctionSchema.deleteOne({_id:req.params.id})
-	reply.status(200).send(new ResponseTemplate(StatusCodes.MOVED_PERMANENTLY,"Auction has been deleted",[req.params.id]))
+	return new ResponseTemplate(StatusCodes.MOVED_PERMANENTLY,"Auction has been deleted",[req.params.id])
 }
 
 

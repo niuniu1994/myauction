@@ -35,7 +35,7 @@ export const bidderLogin = async (req: FastifyRequest<{Body:{email:string,passwo
           expiresIn: 86400 // 24 hours
         });
 
-        reply.status(200).send({ token: token});
+        return { token: token};
 	} catch (error) {
     throw error;
   }
@@ -52,7 +52,10 @@ export const bidderSignup = async (req: FastifyRequest<{Body:Bidder}>, reply: Fa
 
         const salt = await bcrypt.genSalt();
         bidderBody.password = bcrypt.hashSync(bidderBody.password,salt);
-        await bidderSchema.create(bidderBody).then(()=>reply.send(new ResponseTemplate(StatusCodes.CREATED, "Bidder signup successed", null)));
+        await bidderSchema.create(bidderBody)
+        return new ResponseTemplate(StatusCodes.CREATED, "Bidder signup successed", null);
+        
+        
     } catch (error) {
         throw error;
     }
@@ -69,7 +72,8 @@ export const auctioneerSignup = async (req: FastifyRequest<{Body:Bidder}>, reply
       }
       const salt = await bcrypt.genSalt();
       auctioneerBody.password = bcrypt.hashSync(auctioneerBody.password,salt);
-      await auctioneerSchema.create(auctioneerBody).then(()=>reply.send(new ResponseTemplate(StatusCodes.CREATED, "Auctioneer signup successed", null)));
+      await auctioneerSchema.create(auctioneerBody);
+      return new ResponseTemplate(StatusCodes.CREATED, "Auctioneer signup successed", null);
   } catch (error) {
       throw error;
   }
