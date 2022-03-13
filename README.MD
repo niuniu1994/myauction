@@ -3,6 +3,12 @@
 
 For development, you will only need Node.js and a node global package, installed in your environement.
 
+## Topic : MyAuction
+
+Roles: visitor, bidder, auctioneer.
+
+Instead of the tradition auction, the MyAuction realized by us will be only held online through a series of API.
+We apply the rules of the most classic ascending price auction. Bidder bid openly against one another, with each subsequent bid required to be higher than the previous bid.
 ### Node
 - #### Node installation on Windows
 
