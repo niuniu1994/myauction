@@ -2,7 +2,7 @@ import { model, Schema } from "mongoose";
 import { Currency } from "./enums/Currency";
 
 export interface Good{
-    _id: Schema.Types.ObjectId | null,
+    _id?: Schema.Types.ObjectId | null,
     goodName: string,
     startingPrice: number,
     reservePrice: number,

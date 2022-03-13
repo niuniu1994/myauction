@@ -9,7 +9,7 @@
     "start:dev:windows": "$env:NODE_ENV=default && nodemon | pino-pretty ",
     "build": "tsc -p tsconfig.json",
     "lint": "eslint --fix src",
-    "test": "export NODE_ENV=test &&  mocha -r ts-node/register src/test/** --recursive --exit"
+    "test": "export NODE_ENV=test && nyc mocha -r ts-node/register src/test/** --recursive --exit && nyc report --reporter=html"
   },
   "author": "Kaining XIN, Daniel",
   "license": "ISC",
@@ -27,6 +27,7 @@
     "chai": "^4.3.6",
     "eslint": "^8.2.0",
     "mocha": "^9.2.2",
+    "nyc": "^15.1.0",
     "ts-mocha": "^9.0.2",
     "typescript": "^4.3.2"
   },

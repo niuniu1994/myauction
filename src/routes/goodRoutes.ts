@@ -46,7 +46,7 @@ export default async function goodRoutes(fastify:FastifyInstance) {
 		tags: ['good'],
 		body: GoodRequestSchema,
 		response: {
-			200: addUpdateDeleteGoodResponseSchema
+			201: addUpdateDeleteGoodResponseSchema
 		}
 	  },
 	  preHandler: [

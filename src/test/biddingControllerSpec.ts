@@ -1,15 +1,9 @@
 import { startFastify,app } from "../lib/fastify";
-import {dataBaseConnect} from "../test/helper"
-import {mongodbConnect} from '../lib/mongodb'
+import {dataBaseConnect} from "./helper"
 import { assert } from "chai";
 import * as goodService from "../services/goodsService"
 
 describe("test bidddingController",  () => {
-    before(async function(){
-        await startFastify()
-        await dataBaseConnect()
-    })
-
     
 
     it("when offer price then the price of good return response code 200",async ()=>{

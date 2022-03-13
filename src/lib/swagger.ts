@@ -4,7 +4,7 @@ export const Options = {
 	swagger: {
 		info: {
 			title: 'MyAuction',
-			description: 'Building a REST API with Node.js, MongoDB, Fastify and Swagger',
+			description: 'Building the REST API with Node.js, MongoDB, Fastify and Swagger',
 			version: '1.0.0',
 		},
 		externalDocs: {

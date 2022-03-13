@@ -4,7 +4,6 @@ import GoodSchema from "../models/good";
 import { Types } from "mongoose";
 import { EntityNotFoundError } from "../models/oth/customErrors";
 
-
 export const getAllAuctions =async () => await AuctionSchema.find().populate('goods').populate('bidders');
 
 export const getAuctionById =async (id:string) => await AuctionSchema.findById(id).populate('goods').populate('bidders')

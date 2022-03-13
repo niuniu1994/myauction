@@ -4,7 +4,6 @@ import { EntityNotFoundError, InvalidPriceError } from "../models/oth/customErro
 import ResponseTemplate from "../models/oth/responseTemplate";
 import GoodSchema, { Good } from "../models/good";
 import { scheduleJob } from "node-schedule";
-import BidderSchema, { Bidder } from "../models/bidder"
 import AuctionSchema, { Auction } from "../models/auction"
 import { app } from "../lib/fastify";
 import { GoodStatus } from "../models/enums/goodStatus";
@@ -23,8 +22,10 @@ interface Payload {
  * @param reply 
  */
 export const offerPrice = async (req: FastifyRequest<{ Params: { auctionId: string, goodId: string, price: number } }>, reply: FastifyReply) => {
-	console.log("auctionId : " + req.params.auctionId)
-	console.log("goodId: " + req.params.goodId)
+	app.log.info("Recevie price for" )
+	app.log.info("auctionId : " + req.params.auctionId)
+	app.log.info("goodId: " + req.params.goodId)
+	app.log.info("price: " + req.params.price)
 	await AuctionSchema.findOne({_id:req.params.auctionId,goods:{$in:[req.params.goodId]}}).then(async (auction) => {
 		//verify auction exist and is underway
 		const now = new Date();
@@ -36,9 +37,11 @@ export const offerPrice = async (req: FastifyRequest<{ Params: { auctionId: stri
 					good.finalPrice = req.params.price;
 					good.buyer = bidder.bidderId
 					await GoodSchema.updateOne({ _id: req.params.goodId }, good).then(res => {
+						app.log.info(`Offerd price accpeted`)
 						reply.code(200).send(new ResponseTemplate(StatusCodes.OK,"Offer accepted",[good._id]))
 					})
 				} else {
+					app.log.info(`Offerd price rejected`)
 					throw new InvalidPriceError(`Price is lower than ${good.finalPrice}`)
 				}
 			});
@@ -85,7 +88,6 @@ export const scheduleUpdateAuctionJob = async (auctionId: string | ObjectId, end
 			})
 		})
 	})
-
 
 
 }
