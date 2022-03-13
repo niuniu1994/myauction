@@ -1,0 +1,18 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "$id": "bidder.get.response.json",
+    "type": "object",
+    "properties": {
+        "code": {"type":"number"},
+        "msg": {"type":"string"},
+        "data": 
+            {"type":"array", "items": {
+            "$ref": "bidder.complete.response.json"
+        }}
+        
+    
+    },
+    "additionalProperties": false,
+    "required": ["code","msg","data"]
+  }
+  

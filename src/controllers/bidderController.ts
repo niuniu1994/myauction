@@ -1,13 +1,13 @@
 import { FastifyRequest, FastifyReply } from "fastify";
-import BidderSchema from "../models/bidder";
-
+import { StatusCodes } from "http-status-codes";
+import ResponseTemplate from "../models/oth/responseTemplate";
+import * as bidderService from "../services/bidderService"
  
 export const getBidderById = async (req: FastifyRequest<{
 	Params: {id:string}
   }>, reply: FastifyReply)=> {
 	try {
-		// await req.jwtVerify()
-		return await BidderSchema.findById(req.params.id).populate({path:'auctions'});
+		 bidderService.getBidderById(req.params.id).then(value => reply.code(200).send(new ResponseTemplate(StatusCodes.OK,"Bidder found",[value])))
 	} catch (err) {
 		throw err;
 	}

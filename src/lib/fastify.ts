@@ -11,14 +11,14 @@ import config from 'config'
 import * as auctionLimitedResponseSchema from '../schemas/auction.limited.response.json';
 import * as auctionBasicResponseSchema from '../schemas/auction.basic.response.json';
 import * as goodCompleteResponseSchema from '../schemas/good.complete.response.json';
-import * as bidderLimitedResponseSchema from '../schemas/bidder.limited.response.json'
+import * as bidderCompleteResponseSchema from '../schemas/bidder.complete.response.json'
 import * as goodLimitedResponseSchema from '../schemas/good.limited.response.json';
 import * as getGoodResponseSchema from '../schemas/good.get.response.json'
+
 import authRoutes from "../routes/authRoute";
 import biddingRoutes from "../routes/biddingRoutes";
 
 import { EntityNotFoundError, InvalidInputError, InvalidPriceError, UnauthorizedError } from "../models/oth/customErrors";
-import { Auction } from "../models/auction";
 export const app = fastify.default({
     logger: true
 })
@@ -28,7 +28,6 @@ export const app = fastify.default({
     public: fs.readFileSync('config/public.key'),
   },
   sign: { algorithm: 'RS256' }
-
 })
 .register(cookie)
 .register(swagger,Options)
@@ -41,7 +40,7 @@ export const app = fastify.default({
 .addSchema(auctionBasicResponseSchema)
 .addSchema(auctionLimitedResponseSchema)
 .addSchema(goodCompleteResponseSchema)
-.addSchema(bidderLimitedResponseSchema)
+.addSchema(bidderCompleteResponseSchema)
 .addSchema(goodLimitedResponseSchema)
 .addSchema(getGoodResponseSchema)
 .setErrorHandler((error, request, reply) => {

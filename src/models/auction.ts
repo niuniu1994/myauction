@@ -3,13 +3,13 @@ import { model, Schema, Types } from "mongoose"
 
 
 export interface Auction {
-    _id: Types.ObjectId,
+    _id?: Types.ObjectId | string,
     auctionName: string,
     theme: string,
-    startTime: Schema.Types.Date,
-    endTime: Schema.Types.Date,
-    goods: Types.Array<Types.ObjectId>,
-    bidders: Types.Array<Types.ObjectId>
+    startTime: Schema.Types.Date | string,
+    endTime: Schema.Types.Date | string,
+    goods: Array<Types.ObjectId > | Types.Array<Types.ObjectId >,
+    bidders: Array<Types.ObjectId > | Types.Array<Types.ObjectId >
 }
 
 const auctionSchema = new Schema({

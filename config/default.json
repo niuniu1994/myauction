@@ -2,6 +2,7 @@
     "db" : {
         "username" : "kaining",
         "password" : "0000",
+        "server":"cluster0.27cbf",
         "database" : "myauction"
     },
     "serverPort": "3000"

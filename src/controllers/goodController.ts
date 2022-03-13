@@ -1,59 +1,69 @@
 import { FastifyRequest, FastifyReply } from "fastify";
-import GoodSchema, { Good } from "../models/good";
-import BidderSchema from "../models/bidder"
 import ResponseTemplate from "../models/oth/responseTemplate";
 import { StatusCodes } from "http-status-codes";
-import { EntityNotFoundError, InvalidInputError } from "../models/oth/customErrors";
-import { ObjectId } from "mongodb";
+import { Good } from "../models/good";
+import * as goodService from "../services/goodsService";
+import { EntityNotFoundError } from "../models/oth/customErrors";
 
-export const getAllGoods = async (req: FastifyRequest, reply: FastifyReply) => {
+/**
+ * Get all goods
+ * @param req 
+ * @param reply 
+ */
+export const getAllGoods =  (req: FastifyRequest, reply: FastifyReply) => {
 	try{
-		const good = await GoodSchema.find();
-		return new ResponseTemplate(StatusCodes.CREATED,"Good found",good)
+		 goodService.findAllGoods().then(value =>  reply.code(200).send(new ResponseTemplate(StatusCodes.OK,"Good found",value)));
 	}catch{
 		throw new EntityNotFoundError()
 	}
 }
 
-export const getGoodById = async (req: FastifyRequest<{Params: {id:string}}>, reply: FastifyReply) => {
+/**
+ * Get good by id
+ * @param req 
+ * @param reply 
+ */
+export const getGoodById =  (req: FastifyRequest<{Params: {id:string}}>, reply: FastifyReply) => {
 	try{
-		const good = await GoodSchema.findById(req.params.id);
-		console.log(good)
-		return new ResponseTemplate(StatusCodes.CREATED,"Good found",[good])
+		 goodService.findGoodById(req.params.id).then(value =>  reply.code(200).send(new ResponseTemplate(StatusCodes.OK,"Good found",[value])))
 	}catch{
 		throw new EntityNotFoundError(`Good not found : ${req.params.id}`)
 	}	
 }
  
-export const addGood = async (req: FastifyRequest<{Body:Good}>, reply: FastifyReply) => {
-	const good = req.body
-	if(good.buyer) bidderExiste(good.buyer);
-	const goodAdd = await GoodSchema.create(good)
-	return new ResponseTemplate(StatusCodes.CREATED,"Good has been added",[goodAdd._id])
-	
+/**
+ * Add good by id
+ * @param req 
+ * @param reply 
+ * @returns 
+ */
+export const addGood =  (req: FastifyRequest<{Body:Good}>, reply: FastifyReply) => {
+	goodService.addGood(req.body).then(value => reply.code(200).send(new ResponseTemplate(StatusCodes.CREATED,"Good has been added",[value._id])))
 }
 
-export const updateGoodById = async (req: FastifyRequest<{Params:{id:string},Body:Good}>, reply: FastifyReply) => {
+/**
+ * update good
+ * @param req 
+ * @param reply 
+ */
+export const updateGoodById =  (req: FastifyRequest<{Params:{id:string},Body:Good}>, reply: FastifyReply) => {
 	try{
-		await GoodSchema.updateOne({_id:req.params.id},req.body)
-		return new ResponseTemplate(StatusCodes.OK,"Good has been updated",[req.params.id])
+		goodService.updateGoodById(req.params.id,req.body).then(value => reply.code(200).send(new ResponseTemplate(StatusCodes.OK,"Good has been updated",[req.params.id])))
 	}catch{
 		throw new EntityNotFoundError()
 	}
 }
 
-export const deleteGoodById = async  (req: FastifyRequest<{Params:{id:string}}>, reply: FastifyReply) =>{
-	await GoodSchema.deleteOne({_id:req.params.id})
-	return new ResponseTemplate(StatusCodes.MOVED_PERMANENTLY,"Good has been deleted",null)
+/**
+ * Delete good by od
+ * @param req 
+ * @param reply 
+ */
+export const deleteGoodById =   (req: FastifyRequest<{Params:{id:string}}>, reply: FastifyReply) =>{
+	goodService.deleteGoodById(req.params.id).then(() => reply.code(200).send(new ResponseTemplate(StatusCodes.MOVED_PERMANENTLY,"Good has been deleted",null)))
 }
 
 
 
-const bidderExiste = async (bidderId :string | ObjectId ) =>{
-	const buyer = BidderSchema.findById(bidderId);
-	if(!buyer){
-		throw new InvalidInputError(`Bidder not found : ${bidderId} `);
-	}
-}
 
 

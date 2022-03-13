@@ -1,7 +1,7 @@
 import { Schema, model, Types } from 'mongoose';
 
 export interface Bidder{
-  _id: Schema.Types.ObjectId,
+  _id: Schema.Types.ObjectId | null,
   firstName:string,
   lastName:string,
   email:string,

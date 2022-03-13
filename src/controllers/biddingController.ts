@@ -17,25 +17,33 @@ interface Payload {
 	email: string
 }
 
+/**
+ * offer price to a good of an auction
+ * @param req 
+ * @param reply 
+ */
 export const offerPrice = async (req: FastifyRequest<{ Params: { auctionId: string, goodId: string, price: number } }>, reply: FastifyReply) => {
-	await AuctionSchema.findOne({ _id: req.params.auctionId, goods: { $in: [req.params.goodId] } }).then(async (auction) => {
+	console.log("auctionId : " + req.params.auctionId)
+	console.log("goodId: " + req.params.goodId)
+	await AuctionSchema.findOne({_id:req.params.auctionId,goods:{$in:[req.params.goodId]}}).then(async (auction) => {
 		//verify auction exist and is underway
 		const now = new Date();
-		if (auction && auction.startTime < now && auction.endTime > now) {
+		if (auction  && auction.startTime < now && auction.endTime > now) {
 			const token = req.raw.headers.authorization as string;
 			const bidder = app.jwt.decode(token, { complete: false }) as Payload;
 			await GoodSchema.findOne({ _id: req.params.goodId }).then(async good => {
 				if (good.finalPrice < req.params.price && req.params.price > good.startingPrice) {
 					good.finalPrice = req.params.price;
 					good.buyer = bidder.bidderId
-					await GoodSchema.updateOne({ _id: req.params.goodId }, good)
-					return new ResponseTemplate(StatusCodes.OK, "Price of good is updated", [good._id]);
+					await GoodSchema.updateOne({ _id: req.params.goodId }, good).then(res => {
+						reply.code(200).send(new ResponseTemplate(StatusCodes.OK,"Offer accepted",[good._id]))
+					})
 				} else {
 					throw new InvalidPriceError(`Price is lower than ${good.finalPrice}`)
 				}
 			});
 		} else {
-			throw new EntityNotFoundError(`Auction or Good not found`)
+			throw new EntityNotFoundError(`Auction started yet`)
 		}
 	})
 
@@ -53,6 +61,12 @@ export const setupAuctionsUpdateSys = async () => {
 	})
 }
 
+/**
+ * auto update the good's status of an auction after it finished
+ * @param auctionId 
+ * @param endTime 
+ * @param goods 
+ */
 export const scheduleUpdateAuctionJob = async (auctionId: string | ObjectId, endTime: Date, goods: [Good]) => {
 
 	scheduleJob(endTime, async () => {

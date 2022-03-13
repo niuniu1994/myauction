@@ -38,6 +38,4 @@ export const bidderAuthPolicy = (request: FastifyRequest, reply: FastifyReply, d
             done()
         }
     });
-   
-
 }

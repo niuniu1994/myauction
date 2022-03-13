@@ -1,6 +1,6 @@
 import { FastifyInstance, RouteOptions } from "fastify";
 import * as bidderController from '../controllers/bidderController'
-import BidderCompeleteSchema from '../schemas/bidder.complete.response.json'
+import BidderGetSchema from '../schemas/bidder.get.response.json'
 
 export default async function bidderRoutes(fastify: FastifyInstance) {
 
@@ -19,7 +19,7 @@ export default async function bidderRoutes(fastify: FastifyInstance) {
 				}
 			},
 			response: {
-				200: BidderCompeleteSchema
+				200: BidderGetSchema
 			}
 		},
 		handler: bidderController.getBidderById

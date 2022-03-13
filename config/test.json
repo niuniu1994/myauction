@@ -1,8 +1,9 @@
 {
     "db" : {
-        "username" : "username",
-        "password" : "password",
-        "database" : "databasename"
+        "username" : "mongodbadmin",
+        "password" : "mongodbadmin",
+        "server":"cluster0.pllgq",
+        "database" : "myauction"
     },
     "serverPort": "3000"
 }
